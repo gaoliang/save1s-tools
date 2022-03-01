@@ -17,9 +17,65 @@ import Head from "next/head";
 export default function Index() {
   const [textA, setTextA] = useState("");
   const [textB, setTextB] = useState("");
+  const [result, setResult] = useState("");
+  const [separator, setSeparator] = useState("linebreak");
+
+
+  function textToSet(text) {
+    text = text.trim()
+    let elements;
+    switch (separator) {
+      case 'linebreak':
+        elements = text.split(/\r?\n/);
+        break
+      case 'comma':
+        elements = text.split(',');
+    }
+    return new Set(elements);
+  }
+
+
+  function setToText(set) {
+    switch (separator) {
+      case 'linebreak':
+        return Array.from(set).join('\n')
+      case 'comma':
+        return Array.from(set).join(',')
+    }
+  }
+
+  function intersection() {
+    let setA = textToSet(textA)
+    let setB = textToSet(textB, separator)
+    setResult(setToText(new Set([...setA].filter(x => setB.has(x)))))
+  }
+
+  function union() {
+    let setA = textToSet(textA)
+    let setB = textToSet(textB)
+    setResult(setToText(new Set([...setA, ...setB])))
+  }
+
+
+  function diffAB() {
+    let setA = textToSet(textA)
+    let setB = textToSet(textB)
+    setResult(setToText(new Set([...setA].filter(x => !setB.has(x)))))
+  }
+
+  function diffBA() {
+    let setA = textToSet(textA)
+    let setB = textToSet(textB)
+    setResult(setToText(new Set([...setB].filter(x => !setA.has(x)))))
+  }
+
 
   return (
     <Container maxWidth="md">
+      <Head>
+        <title>集合计算器｜省一秒工具箱</title>
+      </Head>
+
       <Box sx={{ my: 4 }}>
 
         <Typography variant="h4" component="h1" gutterBottom>
@@ -54,22 +110,27 @@ export default function Index() {
 
           <FormControl>
             <FormLabel>分隔符</FormLabel>
-            <RadioGroup row >
-              <FormControlLabel value="comma" control={<Radio />} label="逗号" />
+            <RadioGroup
+              row
+              value={separator}
+              onChange={e => setSeparator(e.target.value)}
+            >
               <FormControlLabel value="linebreak" control={<Radio />} label="换行符" />
+              <FormControlLabel value="comma" control={<Radio />} label="逗号" />
             </RadioGroup>
           </FormControl>
         </Box>
         <ButtonGroup variant="contained" aria-label="outlined primary button group">
-          <Button>交集</Button>
-          <Button>并集</Button>
-          <Button>差集(B-A)</Button>
-          <Button>差集(A-B)</Button>
+          <Button onClick={intersection}>交集</Button>
+          <Button onClick={union}>并集</Button>
+          <Button onClick={diffBA}>差集(B-A)</Button>
+          <Button onClick={diffAB}>差集(A-B)</Button>
         </ButtonGroup>
         <Box>
           <TextField
             fullWidth
             multiline
+            value={result}
             rows={8}
             label="运算结果"
             margin="normal"
