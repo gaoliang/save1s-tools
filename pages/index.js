@@ -29,6 +29,9 @@ export default function Index() {
           <Link href="/pace-speed-converter" underline="none">
             配速时速转换
           </Link>
+          <Link href="/bmi" underline="none">
+            BMI计算器
+          </Link>
         </Stack>
         <Copyright />
       </Box>
