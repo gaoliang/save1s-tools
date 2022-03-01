@@ -9,7 +9,7 @@ import Head from 'next/head';
 export default function Index() {
   return (
     <Container maxWidth="sm">
-            <Head>
+      <Head>
         <title>省一秒工具箱</title>
       </Head>
       <Box sx={{ my: 4 }}>
@@ -19,7 +19,9 @@ export default function Index() {
         <Link href="/set-operation" color="secondary">
           集合计算器（交、并、差）
         </Link>
-
+        <Link href="/timestamp" color="secondary">
+          时间戳工具
+        </Link>
         <Copyright />
       </Box>
     </Container>
