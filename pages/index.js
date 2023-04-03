@@ -32,6 +32,9 @@ export default function Index() {
           <Link href="/bmi" underline="none">
             BMI计算器
           </Link>
+          <Link href="/pdf-to-png" underline="none">
+            PDF 转 PNG
+          </Link>
         </Stack>
         <Copyright />
       </Box>
