@@ -12,6 +12,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Head from "next/head";
+import Copyright from '../../src/Copyright';
 
 
 export default function Index() {
@@ -137,6 +138,7 @@ export default function Index() {
             id="fullWidth" />
         </Box>
       </Box>
+      <Copyright />
     </Container>
   );
 }
